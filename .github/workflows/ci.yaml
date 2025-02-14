@@ -28,7 +28,7 @@ jobs:
         uses: docker/metadata-action@v4
         id: meta
         with:
-          images: quay.io/brampelberg/alm-workshop-extern
+          images: ${{ env.CONTAINER_REPOSITORY }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
