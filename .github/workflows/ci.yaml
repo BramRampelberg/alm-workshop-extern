@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - "**" # LET THE PIPELINE TRIGGER ON A PUSH TO ALL BRANCHES
+  release:
+    types: [published]
 
 env:
   CONTAINER_REPOSITORY: quay.io/brampelberg/alm-workshop-extern # PUT YOUR OWN USERNAME HERE
@@ -28,7 +30,7 @@ jobs:
         uses: docker/metadata-action@v4
         id: meta
         with:
-          images: ${{ env.CONTAINER_REPOSITORY }}
+          images: ${{ env.CONTAINER_REPOSITORY }}:${{ github.event.release.tag_name }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
