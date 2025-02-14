@@ -1,12 +1,19 @@
 name: Release Application
 
-on: # ADD YOUR TRIGGER HERE
+on:
+  push:
+    branches:
+      - "**" # LET THE PIPELINE TRIGGER ON A PUSH TO ALL BRANCHES
+  release:
+    types: [published]
 
 env: # ADD YOUR ENVIRONMENT VARIABLES HERE
+  openshift_token: ${{ env.OPENSHIFT_API_TOKEN }}
+  openshift_url: https://api.rm1.0a51.p1.openshiftapps.com:6443
 
 jobs:
   deploy:
-    if: # ADD YOUR CONDITION HERE
+    if: github.ref == 'refs/heads/dev' # ADD YOUR CONDITION HERE
     environment: development
     runs-on: ubuntu-22.04
     steps:
@@ -16,10 +23,10 @@ jobs:
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
         with:
-          openshift_server_url: <<TODO>>
-          openshift_token: <<TODO>>
-          namespace: <<TODO>>
+          openshift_server_url: $openshift_url
+          openshift_token: $openshift_token
+          namespace: brampelberg-dev
 
       - name: Apply Openshift YAML
         run: |
-          # ADD YOUR COMMANDS HERE
+          oc apply -f infra/openshift.yaml
