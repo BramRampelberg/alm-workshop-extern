@@ -8,7 +8,7 @@ on:
 env:
   CONTAINER_REPOSITORY: quay.io/brampelberg/alm-workshop-extern # PUT YOUR OWN USERNAME HERE
   CONTAINER_IMAGE: alm-workshop
-  GOLANG_VERSION: 1.23
+  GOLANG_VERSION: 1.23 #comment
 
 jobs:
   docker:
